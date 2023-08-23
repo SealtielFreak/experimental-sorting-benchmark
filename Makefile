@@ -10,7 +10,7 @@ all: $(STATS_FILES)
 bench_%.json: bench_%.py
 	python $< -o $@
 	pyperf stats $@
-	mv $@ $@_$(shell date +'%Y%m%d_%H%M%S')
+	mv $@ $@_$(shell date +'%Y%m%d_%H%M%S').json
 
 clean:
 	rm -f stats_*.json_*
