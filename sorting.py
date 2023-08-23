@@ -22,27 +22,42 @@ def colomossort(elements):
     return colomossort(_min) + colomossort(_max)
 
 
-def gravitysort(elements):
-    """Gravity sort."""
+def beadsort(elements):
+    """Bead sort."""
+    return_list = []
+
+    transposed_list = [0] * max(elements)
+    for num in elements:
+        transposed_list[:num] = [n + 1 for n in transposed_list[:num]]
+
+    for i in range(len(elements)):
+        return_list.append(sum(n > i for n in transposed_list))
+
+    return return_list[::-1]
+
+
+def bucketsort(elements):
+    """Bucket sort."""
     max_value = max(elements)
-    rows = len(elements)
-    grid = [[0] * max_value for _ in range(rows)]
+    size = max_value / len(elements)
+    buckets = [[] for _ in range(len(elements))]
 
-    for col, num in enumerate(elements):
-        for row in range(rows):
-            if num > 0:
-                grid[row][col] = 1
-                num -= 1
+    for i in range(len(elements)):
+        j = int(elements[i] / size)
+        if j != len(elements):
+            buckets[j].append(elements[i])
+        else:
+            buckets[len(elements) - 1].append(elements[i])
 
-    sorted_arr = []
-    for col in range(max_value):
-        count = 0
-        for row in range(rows):
-            if grid[row][col] == 1:
-                count += 1
-        sorted_arr.extend([col + 1] * count)
+    for i in range(len(elements)):
+        buckets[i] = sorted(buckets[i])
 
-    return sorted_arr
+    result = []
+
+    for i in range(len(elements)):
+        result += buckets[i]
+
+    return result
 
 
 def radixsort(elements):
@@ -152,29 +167,9 @@ def countsort(elements):
     return output
 
 
-def bucketsort(elements):
-    """Bucket sort."""
-    num_buckets = len(elements)
-
-    buckets = [[] for _ in range(num_buckets)]
-
-    for num in elements:
-        bucket_index = int(num * num_buckets)
-        buckets[bucket_index].append(num)
-
-    # Python sort algorithm default
-    for bucket in buckets:
-        bucket.sort()
-
-    sorted_arr = []
-    for bucket in buckets:
-        sorted_arr.extend(bucket)
-
-    return sorted_arr
-
-
 def heapsort(elements):
     """Heap sort."""
+
     def heapify(arr, n, i):
         largest = i
         left = 2 * i + 1
