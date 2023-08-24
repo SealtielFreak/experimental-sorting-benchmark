@@ -195,3 +195,171 @@ def heapsort(elements):
         heapify(elements, i, 0)
 
     return elements
+
+def bubblesort(elements):
+    """Bubble sort."""
+    n = len(elements)
+    
+    swapped = False
+    
+    for i in range(n-1):
+        for j in range(0, n-i-1):
+            if elements[j] > elements[j + 1]:
+                swapped = True
+                elements[j], elements[j + 1] = elements[j + 1], elements[j]
+         
+        if not swapped:
+            return elements
+            
+    return elements
+
+
+def selectionsort(elements):
+    """Selection sort."""
+    n = len(elements)
+    
+    for ind in range(n):
+        min_index = ind
+ 
+        for j in range(ind + 1, n):
+            if elements[j] < elements[min_index]:
+                min_index = j
+                
+        elements[ind], elements[min_index] = elements[min_index], elements[ind]
+    
+    return elements
+
+
+def shellsort(elements):
+    """Shell sort."""
+    n = len(elements)
+    gap = n // 2
+      
+      
+    while gap > 0:
+        j = gap
+        while j < n:
+            i= j - gap
+              
+            while i >= 0:
+                if elements[i+gap] > elements[i]:
+                    break
+                else:
+                    elements[i+gap], elements[i] = elements[i], elements[i+gap]
+  
+                i = i - gap
+            j += 1
+            
+        gap = gap//2
+        
+    return elements
+
+
+def cocktailsort(elements):
+    """Cocktail sort."""
+    n = len(elements)
+    swapped = True
+    start = 0
+    end = n-1
+    
+    while (swapped == True):
+ 
+        swapped = False
+ 
+        for i in range(start, end):
+            if elements[i] > elements[i + 1]:
+                elements[i], elements[i + 1] = elements[i + 1], elements[i]
+                swapped = True
+ 
+        if swapped == False:
+            break
+ 
+        swapped = False
+ 
+        end = end-1
+ 
+        for i in range(end-1, start-1, -1):
+            if elements[i] > elements[i + 1]:
+                elements[i], elements[i + 1] = elements[i + 1], elements[i]
+                swapped = True
+                
+        start = start + 1
+        
+    return elements    
+
+
+def cyclicsort(elements):
+    """Cyclic sort."""
+    n = len(elements)
+    i = 0
+    
+    while i < n:
+        correct = elements[i] - 1
+        if elements[i] != elements[correct]:
+            elements[i], elements[correct] = elements[correct], elements[i]
+        else:
+            i += 1
+            
+    return elements
+            
+def strandsort(elements):
+    """Strand sort."""
+    def strand(inp):
+        element, sub = 0, [inp.pop(0)]
+        
+        while element < len(inp):
+            if inp[element] > sub[-1]:
+                sub.append(inp.pop(element))
+            else:
+                element += 1
+                
+        return sub
+      
+    def merge(a, b):
+        output = []
+        
+        while len(a) and len(b):
+            if a[0] < b[0]:
+                output.append(a.pop(0))
+            else:
+                output.append(b.pop(0))
+                output += a
+                output += b
+                
+        return output
+    
+    output = strand(elements)
+    
+    while len(elements):
+        output = merge(output, strand(elements))
+        
+    return output
+
+
+def combsort(elements):
+    """Comb sort."""
+    def get_next_gap(gap):
+        gap = (gap * 10)//13
+        
+        if gap < 1:
+            return 1
+        
+        return gap
+    
+    n = len(elements)
+ 
+    gap = n
+ 
+    swapped = True
+ 
+    while gap !=1 or swapped == 1:
+        gap = get_next_gap(gap)
+ 
+        swapped = False
+        
+        for i in range(0, n-gap):
+            if elements[i] > elements[i + gap]:
+                elements[i], elements[i + gap] = elements[i + gap], elements[i]
+                swapped = True
+    
+    return elements                                                              
