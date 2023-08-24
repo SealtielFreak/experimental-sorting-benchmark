@@ -22,6 +22,26 @@ def colomossort(elements):
     return colomossort(_min) + colomossort(_max)
 
 
+def meanbsort(elements, _limit=8):
+    """Mean sort (Colomos sort) like bucket."""
+    _min, _max = [], []
+    length = len(elements)
+
+    if length <= _limit:
+        elements.sort()
+        return elements
+
+    m = sum(elements) / length
+
+    for v in elements:
+        if v > m:
+            _max.append(v)
+        else:
+            _min.append(v)
+
+    return meanbsort(_min, _limit) + meanbsort(_max, _limit)
+
+
 def beadsort(elements):
     """Bead sort."""
     return_list = []
