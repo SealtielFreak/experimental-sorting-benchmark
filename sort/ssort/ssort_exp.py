@@ -2,37 +2,35 @@ import math
 import random
 
 
-def getdecimals(f: float) -> int:
-    decimal = len(str(f).split(".")[1])
-    return int("1" + ("0" * decimal))
-
-
-def casttointegers(array, decimals):
-    return [*map(lambda x: math.ceil(x * decimals), array)]
-
-
-def casttofloats(array, decimals):
-    return [*map(lambda x: x / decimals, array)]
-
-
 def ssortf(array, length, high, low):
+    step_low = math.ceil(low)
     step = abs(math.ceil(low))
     length = math.ceil(step + high + length)
     subarray = [[0, []] for _ in range(length)]
+    keys = []
 
     for n in array:
         index = math.ceil(n) + step
 
         if isinstance(n, float):
             subarray[index][1].append(n)
+
+            if len(subarray[index][1]) == 1:
+                keys.append(index)
+
         else:
             subarray[index][0] += 1
 
+        if subarray[index][0] == 1:
+            keys.append(index)
+
     auxarray = []
 
-    for n, (i, floats) in enumerate(subarray):
+    for n, k in enumerate(keys):
+        i, floats = subarray[k]
+
         while i != 0:
-            auxarray.append(n - step)
+            auxarray.append(n + step_low)
 
             if i <= 1:
                 break
@@ -71,16 +69,12 @@ def ssort(array, length, high, low):
 if __name__ == "__main__":
     DEFAULT_LENGTH = 100
 
-    array = [-n / 10 for n in range(DEFAULT_LENGTH)]
+    array = [random.randint(0, 1000) for n in range(DEFAULT_LENGTH)]
     random.shuffle(array)
+    print("Array unsorted:", array)
 
-    print(array)
     array_sorted = ssortf(array, len(array), max(array), min(array))
-
-    print(array_sorted)
+    print("Array sorted:", array_sorted)
 
     array.sort()
-    print(array)
-
-    print(len(array))
-    print(len(array_sorted))
+    print("Array sorted:", array)
