@@ -1,6 +1,6 @@
 import random
 
-from sort.usort import usort
+from sort.ssort.dssort import usort
 
 
 def samelist(list1, list2):
