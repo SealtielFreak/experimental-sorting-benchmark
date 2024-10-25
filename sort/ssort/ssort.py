@@ -1,3 +1,4 @@
+import collections
 import math
 
 
@@ -47,5 +48,21 @@ def ssort(elements, length, high, low):
         for _ in range(i):
             elements[pivot] = n - step
             pivot += 1
+
+    return elements
+
+
+def ssort_n(elements, length, high, low):
+    step = abs(low)
+    subarray_length = step + high + length if high > length else length + step
+    subarray = [[] for _ in range(subarray_length)]
+
+    for n in elements:
+        subarray[n + step].append(n)
+
+    elements = []
+
+    for n, d in enumerate(subarray):
+        elements += d
 
     return elements
