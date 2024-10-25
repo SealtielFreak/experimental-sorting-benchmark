@@ -1,4 +1,5 @@
 import collections
+import itertools
 import math
 
 
@@ -62,7 +63,12 @@ def ssort_n(elements, length, high, low):
 
     elements = []
 
-    for n, d in enumerate(subarray):
+    for d in subarray:
         elements += d
+
+    """
+    An alternative to unite the reconstructed chains is:
+        return list(chain(*subarray))
+    """
 
     return elements
