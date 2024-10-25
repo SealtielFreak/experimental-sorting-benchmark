@@ -3,28 +3,28 @@ import math
 
 def dssortf(elements, length, high, low):
     """DS. sort (Floats)."""
-    if low < 0:
+    negative_series = low < 0
+
+    if negative_series:
         length //= 2
 
     pivot_p, pivot_n = 0, 0
-    n_arr_p = [[[], []] for _ in range(length)]
-    n_arr_n = [[[], []] for _ in range(length)]
+    n_positive_series = [[[], []] for _ in range(length)]
+    n_negative_series = [[[], []] for _ in range(length)] if negative_series else []
 
-    k_arr = []
-    nk_arr = []
-    
-    max_p, max_n = 0, 0
+    k_positive_series = []
+    k_negative_series = []
 
     for e in elements:
         if abs(e) > length:
             if e < 0:
-                nk_arr.append(e)
+                k_negative_series.append(e)
             else:
-                k_arr.append(e)
+                k_positive_series.append(e)
         else:
             isnegative = e < 0
 
-            s_arr = n_arr_n if isnegative else n_arr_p
+            s_arr = n_negative_series if isnegative else n_positive_series
 
             en = math.floor(e)
             isinteger = en == e
@@ -32,44 +32,50 @@ def dssortf(elements, length, high, low):
             s_arr = s_arr[index][1] if not isinteger else s_arr[index][0]
 
             s_arr.append(e)
-            
+
             if index > pivot_p and isinteger:
                 pivot_p = index + 1
-                
+
             if index > pivot_n and isnegative:
                 pivot_n = index + 1
-    
+
+    k_series = len(k_positive_series) > 0
+
     elements = []
-    
-    nk_arr.sort()
-    elements += nk_arr
-    
-    n_arr_n = n_arr_n[:pivot_n + 1]
-    for elms in reversed(n_arr_n):
+    n_positive_series = n_positive_series[:pivot_p + 1]
+
+    if negative_series:
+        n_negative_series = n_negative_series[:pivot_n + 1]
+
+        k_negative_series.sort()
+        elements += k_negative_series
+
+        for elms in reversed(n_negative_series):
+            integers, floats = elms
+
+            elements += integers
+
+            floats.sort()
+            elements += floats
+
+    for elms in n_positive_series:
         integers, floats = elms
-        
+
         elements += integers
-        
+
         floats.sort()
         elements += floats
-        
-    n_arr_p = n_arr_p[:pivot_p]
-    for elms in n_arr_p:
-        integers, floats = elms
-        
-        elements += integers
-        
-        floats.sort()
-        elements += floats
-    
-    k_arr.sort()
-    elements += k_arr
+
+    if k_series:
+        k_positive_series.sort()
+        elements += k_positive_series
 
     return elements
 
 
 def dssort(elements, length, high, low):
     """DS. sort."""
+
     def _bubblesort(elements):
         """Bubble sort."""
         n = len(elements)
