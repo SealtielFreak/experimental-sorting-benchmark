@@ -1,9 +1,8 @@
-import collections
-import itertools
 import math
 
 
 def ssortf(elements, length, high, low):
+    """S. sort (Floats)."""
     step = abs(math.ceil(low))
     length = math.ceil(step + high + length)
     subarray = [[0, []] for _ in range(length)]
@@ -36,6 +35,7 @@ def ssortf(elements, length, high, low):
 
 
 def ssort(elements, length, high, low):
+    """S. sort (Classic)."""
     step = abs(low)
     subarray_length = high + length if high > length else length + step if step > length else length
     subarray = [0] * subarray_length
@@ -54,6 +54,7 @@ def ssort(elements, length, high, low):
 
 
 def ssort_n(elements, length, high, low):
+    """S. sort (N)."""
     step = abs(low)
     subarray_length = high + length if high > length else length + step if step > length else length
     subarray = [[] for _ in range(subarray_length)]
@@ -72,3 +73,5 @@ def ssort_n(elements, length, high, low):
     """
 
     return elements
+
+
