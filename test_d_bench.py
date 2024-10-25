@@ -11,7 +11,8 @@ import math
 
 DEFAULT_LENGTH = {DEFAULT_LENGTH_ARRAY}
 
-elements = [n for n in range(DEFAULT_LENGTH)]
+elements = [n for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
+elements = [*elements] + [*elements] + [30, 500, 40000] + [-50000]
 random.shuffle(elements)
 """
 
@@ -19,8 +20,8 @@ S_SORT_STMT = "sorted_elements = ssort_n(elements, len(elements), max(elements),
 DS_SORT_STMT = "sorted_elements = dssort(elements, len(elements), max(elements), min(elements))"
 
 ALL_STMT_TEST = {
-    "S. sort (Only digits)": create_custom_stmt("ssort_n", load_file("sort/ssort/ssort.py"), S_SORT_STMT),
-    "DS. sort (Only digits)": create_custom_stmt("dssort", load_file("sort/ssort/dssort.py"), DS_SORT_STMT),
+    "S. sort": create_custom_stmt("ssort_n", load_file("sort/ssort/ssort.py"), S_SORT_STMT),
+    "DS. sort": create_custom_stmt("dssort", load_file("sort/ssort/dssort.py"), DS_SORT_STMT),
 
     # "Mead sort": create_stmt("meadsort", load_file("sort/meadsort/meadsort.py")),
     # "Mead sort (Like C)": create_stmt("meadsort", load_file("sort/meadsort/meadsort_like_c.py")),
@@ -37,7 +38,7 @@ ALL_STMT_TEST = {
     "Flash sort": create_stmt("flashsort", load_file("sort/flashsort.py")),
     "Pigeonhole sort": create_stmt("pigeonholesort", load_file("sort/pigeonholesort.py")),
     "Radix sort": create_stmt("radixsort", load_file("sort/radixsort.py")),
-    "Tim sort": create_stmt("timsort", load_file("sort/timsort.py")),
+    # "Tim sort": create_stmt("timsort", load_file("sort/timsort.py")),
 }
 
 if __name__ == "__main__":

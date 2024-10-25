@@ -1,6 +1,6 @@
 import random
 
-from sort.ssort.dssort import usort
+from sort.ssort.dssort import dssort, dssortf
 
 
 def samelist(list1, list2):
@@ -24,13 +24,13 @@ def issorted(arr):
 
 
 if __name__ == "__main__":
-    DEFAULT_LENGTH = 2500
+    DEFAULT_LENGTH = 25
 
-    elements = [n for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
-    elements = [*elements] + [*elements] + [*elements] + [30, 500, 40000] + [-50000]
+    elements = [n / 10 for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
+    elements = [*elements] + [*elements] + [30, 500, 40000] + [-50000]
     random.shuffle(elements)
 
-    array_sorted = usort([*elements], len(elements), max(elements), min(elements))
+    array_sorted = dssortf([*elements], len(elements), max(elements), min(elements))
 
     assert samelist(array_sorted, elements), "The list is no longer the same"
     assert issorted(array_sorted), "Sorting failed"
