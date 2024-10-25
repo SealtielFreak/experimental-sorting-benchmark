@@ -33,17 +33,19 @@ def ssortf(elements, length, high, low):
     return auxarray
 
 
-def ssort(array, length, high, low):
+def ssort(elements, length, high, low):
     step = abs(low)
-    subarray = [0] * (step + high + length)
+    subarray_length = step + high + length if high > length else length + step
+    subarray = [0] * subarray_length
 
-    for n in array:
+    for n in elements:
         subarray[n + step] += 1
 
-    auxarray = []
+    pivot = 0
 
     for n, i in enumerate(subarray):
-        for r in range(i):
-            auxarray.append(n - step)
+        for _ in range(i):
+            elements[pivot] = n - step
+            pivot += 1
 
-    return auxarray
+    return elements
