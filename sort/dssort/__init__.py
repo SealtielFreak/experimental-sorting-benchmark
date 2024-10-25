@@ -1,5 +1,5 @@
-def usort(elements, length, high, low):
-    """U. sort."""
+def dssort(elements, length, high, low):
+    """DS. sort."""
     def _bubblesort(elements):
         """Bubble sort."""
         n = len(elements)
@@ -46,6 +46,6 @@ def usort(elements, length, high, low):
     for d in n_arrp:
         elements += d
 
-    elements += _bubblesort(k_arr)
+    elements += _bubblesort(k_arr) if len(k_arr) > 0 else []
 
     return elements
