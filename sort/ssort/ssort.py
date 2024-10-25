@@ -37,7 +37,7 @@ def ssortf(elements, length, high, low):
 
 def ssort(elements, length, high, low):
     step = abs(low)
-    subarray_length = step + high + length if high > length else length + step
+    subarray_length = high + length if high > length else length + step if step > length else length
     subarray = [0] * subarray_length
 
     for n in elements:
@@ -55,7 +55,7 @@ def ssort(elements, length, high, low):
 
 def ssort_n(elements, length, high, low):
     step = abs(low)
-    subarray_length = step + high + length if high > length else length + step
+    subarray_length = high + length if high > length else length + step if step > length else length
     subarray = [[] for _ in range(subarray_length)]
 
     for n in elements:
