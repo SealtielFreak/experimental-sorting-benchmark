@@ -24,15 +24,16 @@ def issorted(arr):
 
 
 if __name__ == "__main__":
-    DEFAULT_LENGTH = 25
+    DEFAULT_LENGTH = 2500
 
-    elements = [n / 10 for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
-    elements = [*elements] + [*elements] + [30, 500, 40000] + [-50000]
+    # elements = [n / 10 for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
+    # elements = [*elements] + [*elements] + [2] + [30, 500, 40000] + [-50000]
+    elements = [n for n in range(DEFAULT_LENGTH)]
     random.shuffle(elements)
 
-    array_sorted = dssortf([*elements], len(elements), max(elements), min(elements))
+    elements_sorted = dssort([*elements], len(elements), max(elements), min(elements))
 
-    assert samelist(array_sorted, elements), "The list is no longer the same"
-    assert issorted(array_sorted), "Sorting failed"
+    assert samelist(elements_sorted, elements), "The list is no longer the same"
+    assert issorted(elements_sorted), "Sorting failed"
 
     print("Success!")

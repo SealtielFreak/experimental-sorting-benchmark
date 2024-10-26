@@ -4,16 +4,17 @@ import math
 def dssortf(elements, length, high, low):
     """DS. sort (Floats)."""
     negative_series = low < 0
+    k_series = high > length
 
     if negative_series:
         length //= 2
 
     pivot_p, pivot_n = 0, 0
     n_positive_series = [[[], []] for _ in range(length)]
-    n_negative_series = [[[], []] for _ in range(length)] if negative_series else []
+    n_negative_series = [[[], []] for _ in range(length)] if negative_series else None
 
-    k_positive_series = []
-    k_negative_series = []
+    k_positive_series = [] if k_series else None
+    k_negative_series = [] if negative_series else None
 
     for e in elements:
         if abs(e) > length:
@@ -22,24 +23,21 @@ def dssortf(elements, length, high, low):
             else:
                 k_positive_series.append(e)
         else:
-            isnegative = e < 0
+            is_negative = e < 0
 
-            s_arr = n_negative_series if isnegative else n_positive_series
+            s_arr = n_negative_series if is_negative else n_positive_series
 
             en = math.floor(e)
-            isinteger = en == e
+            is_integer = en == e
             index = abs(en)
-            s_arr = s_arr[index][1] if not isinteger else s_arr[index][0]
+            s_arr = s_arr[index][1] if not is_integer else s_arr[index][0]
 
             s_arr.append(e)
 
-            if index > pivot_p and isinteger:
+            if index > pivot_p and is_integer:
                 pivot_p = index + 1
-
-            if index > pivot_n and isnegative:
+            elif index > pivot_n and is_negative:
                 pivot_n = index + 1
-
-    k_series = len(k_positive_series) > 0
 
     elements = []
     n_positive_series = n_positive_series[:pivot_p + 1]
@@ -75,53 +73,40 @@ def dssortf(elements, length, high, low):
 
 def dssort(elements, length, high, low):
     """DS. sort."""
-
-    def _bubblesort(elements):
-        """Bubble sort."""
-        n = len(elements)
-
-        swapped = False
-
-        for i in range(n - 1):
-            for j in range(0, n - i - 1):
-                if elements[j] > elements[j + 1]:
-                    swapped = True
-                    elements[j], elements[j + 1] = elements[j + 1], elements[j]
-
-            if not swapped:
-                return elements
-
-        return elements
-
     if low < 0:
         length //= 2
 
-    n_arr_p = [[] for _ in range(length)]
-    n_arr_n = [[] for _ in range(length)]
+    pivot_p, pivot_n = 0, 0
+    n_positive_series = [[] for _ in range(length)]
+    n_negative_series = [[] for _ in range(length)]
 
-    k_arr = []
-    nk_arr = []
+    k_positive_series = []
+    k_negative_series = []
 
     for e in elements:
         if abs(e) > length:
             if e < 0:
-                nk_arr.append(e)
+                k_negative_series.append(e)
             else:
-                k_arr.append(e)
+                k_positive_series.append(e)
         else:
             if e < 0:
-                n_arr_n[abs(e)].append(e)
+                n_negative_series[abs(e)].append(e)
             else:
-                n_arr_p[e].append(e)
+                n_positive_series[e].append(e)
 
-    elements = _bubblesort(nk_arr) if len(nk_arr) > 0 else []
+    elements = []
 
-    for d in reversed(n_arr_n):
+    k_negative_series.sort()
+    elements += k_negative_series
+
+    for d in reversed(n_negative_series):
         elements += d
 
-    for d in n_arr_p:
+    for d in n_positive_series:
         elements += d
 
-    elements += _bubblesort(k_arr) if len(k_arr) > 0 else []
+    k_positive_series.sort()
+    elements += k_positive_series
 
     return elements
