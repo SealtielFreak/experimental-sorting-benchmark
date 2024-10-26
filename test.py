@@ -28,7 +28,8 @@ if __name__ == "__main__":
 
     # elements = [n / 10 for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
     # elements = [*elements] + [*elements] + [2] + [30, 500, 40000] + [-50000]
-    elements = [n for n in range(DEFAULT_LENGTH)]
+    elements = [n for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
+    elements = [*elements] + [*elements]
     random.shuffle(elements)
 
     elements_sorted = dssort([*elements], len(elements), max(elements), min(elements))

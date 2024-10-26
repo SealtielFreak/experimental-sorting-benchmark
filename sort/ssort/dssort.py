@@ -90,18 +90,32 @@ def dssort(elements, length, high, low):
             else:
                 k_positive_series.append(e)
         else:
+            is_negative = e < 0
+            en = math.floor(e)
+            is_integer = en == e
+            index = abs(en)
+
             if e < 0:
-                n_negative_series[abs(e)].append(e)
+                n_negative_series[index - 1].append(e)
             else:
-                n_positive_series[e].append(e)
+                n_positive_series[index].append(e)
+
+            if index > pivot_p and is_integer:
+                pivot_p = index + 1
+            elif index > pivot_n and is_negative:
+                pivot_n = index + 1
 
     elements = []
 
     k_negative_series.sort()
     elements += k_negative_series
 
+    n_negative_series = n_negative_series[:pivot_n + 1]
+
     for d in reversed(n_negative_series):
         elements += d
+
+    n_positive_series = n_positive_series[:pivot_p + 1]
 
     for d in n_positive_series:
         elements += d
