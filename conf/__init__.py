@@ -28,6 +28,10 @@ assert issorted(sorted_elements), "Sorting failed"
 """
 
 
+def create_load_stmt(sort_name: str):
+    return f"sorted_elements = {sort_name}(elements, len(elements), max(elements), min(elements))"
+
+
 def create_stmt(sort_name: str, stmt: str) -> str:
     return f"""
 {stmt}

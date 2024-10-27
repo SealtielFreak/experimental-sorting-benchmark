@@ -75,3 +75,50 @@ def ssort_n(elements, length, high, low):
     return elements
 
 
+def ssort_nn(elements, length, high, low):
+    """S. sort (NN)."""
+    step = abs(low)
+
+    if length <= 1:
+        return elements
+
+    series_length = length
+
+
+    # k_series = length * (length - 1)
+    p_series = [0] * series_length
+    n_series = [0] * series_length
+    k_series = []
+
+    for n in elements:
+        if n > length:
+            k_series.append(n)
+        else:
+            if n < 0:
+                n_series[n + step] += 1
+            else:
+                p_series[n + step] += 1
+
+    elements = []
+
+    n_cumulative = 0
+    n_autosum = sum(n_series)
+
+    for i, d in enumerate(n_series):
+        elements += [i - step] * d
+        n_cumulative += d
+
+        if n_cumulative >= n_autosum:
+            break
+
+    p_cumulative = 0
+    p_autosum = sum(p_series)
+
+    for i, d in enumerate(p_series):
+        elements += [i] * d
+        p_cumulative += d
+
+        if p_cumulative >= p_autosum:
+            break
+
+    return elements

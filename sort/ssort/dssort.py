@@ -73,6 +73,9 @@ def dssortf(elements, length, high, low):
 
 def dssort(elements, length, high, low):
     """DS. sort."""
+    negative_series = low < 0
+    k_series = high > length
+
     if low < 0:
         length //= 2
 
@@ -107,20 +110,22 @@ def dssort(elements, length, high, low):
 
     elements = []
 
-    k_negative_series.sort()
-    elements += k_negative_series
+    if negative_series:
+        k_negative_series.sort()
+        elements += k_negative_series
 
-    n_negative_series = n_negative_series[:pivot_n + 1]
+        n_negative_series = n_negative_series[:pivot_n + 1]
 
-    for d in reversed(n_negative_series):
-        elements += d
+        for d in reversed(n_negative_series):
+            elements += d
 
     n_positive_series = n_positive_series[:pivot_p + 1]
 
     for d in n_positive_series:
         elements += d
 
-    k_positive_series.sort()
-    elements += k_positive_series
+    if k_series:
+        k_positive_series.sort()
+        elements += k_positive_series
 
     return elements
