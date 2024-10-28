@@ -3,7 +3,7 @@ import pyperf
 from conf import create_stmt, run_all_bench, create_teardown, create_custom_stmt, create_load_stmt
 from conf.files import load_file
 
-DEFAULT_LENGTH_ARRAY = 100000
+DEFAULT_LENGTH_ARRAY = 10000
 
 DEFAULT_SETUP = f"""
 import random
@@ -17,10 +17,10 @@ random.shuffle(elements)
 """
 
 ALL_STMT_TEST = {
-    # "S. sort (N)": create_custom_stmt("ssort_n", load_file("sort/ssort/ssort.py"), create_load_stmt("ssort_n")),
-    "Qick sort": create_stmt("quicksort", load_file("sort/quicksort/quicksort_classic.py")),
-    "Mead sort (Fixed)": create_stmt("meadsort_f", load_file("sort/meadsort/meadsort.py")),
-    "Mead sort (Fixed both)": create_stmt("meadsort_fb", load_file("sort/meadsort/meadsort.py")),
+    "Quick sort": create_stmt("quicksort", load_file("sort/quicksort/quicksort_classic.py")),
+    "Mead sort (F)": create_stmt("meadsort_f", load_file("sort/meadsort/meadsort.py")),
+    "Mead sort (FF)": create_stmt("meadsort_ff", load_file("sort/meadsort/meadsort.py")),
+    "Mead sort (K)": create_stmt("meadsort_k", load_file("sort/meadsort/meadsort.py")),
 }
 
 if __name__ == "__main__":

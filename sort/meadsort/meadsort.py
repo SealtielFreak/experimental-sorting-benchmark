@@ -26,7 +26,7 @@ def meadsort(elements):
 
 
 def meadsort_f(elements):
-    """Mead sort (Fixed)."""
+    """Mead sort (F)."""
     length = len(elements)
     left, right = [], []
 
@@ -57,8 +57,8 @@ def meadsort_f(elements):
     return meadsort_f(left) + meadsort_f(right)
 
 
-def meadsort_fb(elements):
-    """Mead sort (Fixed both)."""
+def meadsort_ff(elements):
+    """Mead sort (FF)."""
     length = len(elements)
     left, right = [], []
 
@@ -71,67 +71,64 @@ def meadsort_fb(elements):
         return elements
 
     mead = sum(elements) / length
-    difference_left, difference_right = elements[0], elements[0]
-    last_left, last_right = elements[0], elements[0]
-    difference_detected_left, difference_detected_right = False, False
+    pivot_l, pivot_r = elements[0], elements[0]
+    det_left, det_right = False, False
 
     for v in elements:
         if v > mead:
             right.append(v)
 
-            if not difference_detected_right and difference_right != last_right:
-                difference_detected_right = True
+            if not det_right and v != pivot_r:
+                det_right = True
 
-            last_right = v
+            pivot_r = v
         else:
             left.append(v)
 
-            if not difference_detected_left and difference_left != last_left:
-                difference_detected_left = True
+            if not det_left and v != pivot_l:
+                det_left = True
 
-            last_left = v
+            pivot_l = v
 
-    left = meadsort_fb(left) if difference_detected_left else left
-    right = meadsort_fb(right) if difference_detected_right else right
+    left = meadsort_ff(left) if det_left else left
+    right = meadsort_ff(right) if det_right else right
 
     return left + right
 
 
-def meadsort_p(elements):
-    """Mead sort (Presorted)."""
+def meadsort_k(elements):
+    """Mead sort (K)."""
     length = len(elements)
     left, right = [], []
 
-    if length <= 1:
-        return elements
-    elif length == 2:
-        if elements[0] > elements[1]:
-            return [elements[1], elements[0]]
-
-        return elements
-
     mead = sum(elements) / length
-    pivot_left, pivot_right = elements[0], elements[0]
-    last_left, last_right = elements[0], elements[0]
-    sorted_l, sorted_r = True, True
+    pivot_l, pivot_r = elements[0], elements[0]
+    det_left, det_right = False, False
+    sort_left, sort_right = True, True
 
     for v in elements:
         if v > mead:
             right.append(v)
 
-            if sorted_r and not v >= last_right:
-                sorted_r = False
+            if not det_right and v != pivot_r:
+                det_right = True
 
-            last_right = v
+            if sort_right and not v >= pivot_r:
+                sort_right = False
+
+            pivot_r = v
         else:
             left.append(v)
 
-            if sorted_l and not v >= last_left:
-                sorted_l = False
+            if not det_left and v != pivot_l:
+                det_left = True
 
-            last_left = v
+            if sort_left and not v >= pivot_r:
+                sort_left = False
 
-    left = meadsort_p(left) if sorted_l else left
-    right = meadsort_p(right) if sorted_r else right
+            pivot_l = v
+
+    left = meadsort_k(left) if det_left and not sort_left else left
+    right = meadsort_k(right) if det_right and not sort_right else right
 
     return left + right
