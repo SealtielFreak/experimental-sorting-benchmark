@@ -199,3 +199,49 @@ def meadsort_k(elements):
     right = meadsort_k(right) if det_right and not sort_right else right
 
     return left + right
+
+
+def meadsort_zk(elements):
+    """Mead sort (ZK)."""
+    length = len(elements)
+
+    if length <= 1:
+        return elements
+    elif length == 2:
+        if elements[0] > elements[1]:
+            return [elements[1], elements[0]]
+
+    _min, _mead, _max = [], [], []
+    mead = sum(elements) / length
+    pivot_l, pivot_r = elements[0], elements[0]
+    det_left, det_right = False, False
+    sort_left, sort_right = True, True
+
+    for v in elements:
+        if v > mead:
+            _max.append(v)
+
+            if not det_right and v != pivot_r:
+                det_right = True
+
+            if sort_right and not v >= pivot_r:
+                sort_right = False
+
+            pivot_r = v
+        elif v < mead:
+            _min.append(v)
+
+            if not det_left and v != pivot_l:
+                det_left = True
+
+            if sort_left and not v >= pivot_r:
+                sort_left = False
+
+            pivot_l = v
+        else:
+            _mead.append(v)
+
+    _min = meadsort_zk(_min) if det_left and not sort_left else _min
+    _max = meadsort_zk(_max) if det_right and not sort_right else _max
+
+    return _min + _mead + _max
