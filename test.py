@@ -1,6 +1,6 @@
 import random
 
-from sort.meadsort.meadsort import meadsort_f, meadsort_ff, meadsort_k
+from sort.meadsort.meadsort import meadsort_mf
 
 
 def samelist(list1, list2):
@@ -27,11 +27,12 @@ if __name__ == "__main__":
     # elements = [0, 1, 2, 3, 0]
     # random.shuffle(elements)
 
-    DEFAULT_LENGTH = 500
-    elements = [random.randint(n, DEFAULT_LENGTH) for n in range(-DEFAULT_LENGTH, DEFAULT_LENGTH)]
-    elements = [*elements] + [*elements] + [*elements] + [*elements] + [*elements]
+    DEFAULT_LENGTH = 100
 
-    elements_sorted = meadsort_k(elements)
+    elements = [n for n in range(DEFAULT_LENGTH)]
+    random.shuffle(elements)
+
+    elements_sorted = meadsort_mf(elements)
 
     assert samelist(elements_sorted, elements), "The list is no longer the same"
     assert issorted(elements_sorted), "Sorting failed"

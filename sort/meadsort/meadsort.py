@@ -25,6 +25,73 @@ def meadsort(elements):
     return _min + _max
 
 
+def meadsort_m(elements):
+    """Mead sort (M)."""
+    length = len(elements)
+
+    if length <= 1:
+        return elements
+    elif length == 2:
+        if elements[0] > elements[1]:
+            return [elements[1], elements[0]]
+
+        return elements
+
+    _min, _mead, _max = [], [], []
+    m_pivot = sum(elements) / length
+
+    for v in elements:
+        if v > m_pivot:
+            _max.append(v)
+        elif v < m_pivot:
+            _min.append(v)
+        else:
+            _mead.append(v)
+
+    return meadsort_m(_min) + _mead + meadsort_m(_max)
+
+
+def meadsort_mf(elements):
+    """Mead sort (MF)."""
+    length = len(elements)
+
+    if length <= 1:
+        return elements
+    elif length == 2:
+        if elements[0] > elements[1]:
+            return [elements[1], elements[0]]
+
+        return elements
+
+    _min, _mead, _max = [], [], []
+    mead = sum(elements) / length
+    pivot_l, pivot_r = elements[0], elements[0]
+    det_left, det_right = False, False
+
+    for v in elements:
+        if v > mead:
+            _max.append(v)
+
+            if not det_right and v != pivot_r:
+                det_right = True
+
+            pivot_r = v
+        elif v < mead:
+            _min.append(v)
+
+            if not det_left and v != pivot_l:
+                det_left = True
+
+            pivot_l = v
+        else:
+            _mead.append(v)
+
+    _min = meadsort_mf(_min) if det_left else _min
+    _max = meadsort_mf(_max) if det_right else _max
+
+    return _min + _mead + _max
+
+
 def meadsort_f(elements):
     """Mead sort (F)."""
     length = len(elements)
